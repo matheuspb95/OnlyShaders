@@ -3,6 +3,7 @@
 		_Color ("Color", Color) = (1,1,1,1)
 		_MainTex ("Albedo (RGB)", 2D) = "white" {}
 		_Amount("Extrusion Amount", Range(-1, 1)) = 0
+		_TimeMult("Time Multiplier", Range(0, 1)) = 0.5
 	}
 	SubShader {
 		Tags { "RenderType"="Opaque" }
@@ -27,10 +28,11 @@
 		};
 
 		fixed4 _Color;
-		float _Amount;		
+		float _Amount;	
+		float _TimeMult;	
 
 		void vert(inout appdata_full v){
-			v.vertex.xyz += v.normal * _Amount * rand(_Time);
+			v.vertex.xyz += v.normal * _Amount * rand(v.vertex.xyz * _Time * _TimeMult);
 		}
 
 
